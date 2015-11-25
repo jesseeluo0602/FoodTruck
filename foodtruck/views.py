@@ -16,7 +16,7 @@ def index(request):
 
 @csrf_exempt
 def find_closest(request):
-    assert request.method == 'POST', 'api/find_closest/ has to be a POST request'
+    # assert request.method == 'POST', 'api/find_closest/ has to be a POST request'
     errors = []
     post = QueryDict('', mutable=True)
     post.update(json.loads(request.body))
