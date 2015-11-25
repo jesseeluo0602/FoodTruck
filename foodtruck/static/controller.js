@@ -10,16 +10,20 @@ app.controller('IndexController', function($http, $window) {
   vm.query = {}
   vm.results = []
   vm.find_closest = function() {
-    console.log(autocomplete.getPlace())
-    var place = autocomplete.getPlace();
-    vm.query.longitude = place.geometry.location.lng();
-    vm.query.latitude = place.geometry.location.lat();
-    vm.query.address = place.formatted_address
-    $http.post("/api/find_closest", vm.query).then(
-        function successCallBack(response) {
-          var data = response.data;
-          vm.results = data.nearest_trucks
-        })
+      console.log(autocomplete.getPlace())
+      var place = autocomplete.getPlace();
+      vm.query.longitude = place.geometry.location.lng();
+      vm.query.latitude = place.geometry.location.lat();
+      vm.query.address = place.formatted_address
+      console.log(vm.query);
+      if (vm.query != {}) {
+        $http.post("/api/find_closest", vm.query).then(
+          function successCallBack(response) {
+            var data = response.data;
+            vm.results = data.nearest_trucks
+          })
+      }
+
   }
 
 
