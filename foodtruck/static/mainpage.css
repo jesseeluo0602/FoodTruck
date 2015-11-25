@@ -1,0 +1,13 @@
+.scrollable {
+  overflow: scroll;
+  height: 500px;
+}
+
+#autocomplete {
+  width: 100%;
+}
+
+#map {
+  width: 500px;
+  height: 500px;
+}

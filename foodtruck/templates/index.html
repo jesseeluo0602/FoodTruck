@@ -1,55 +1,66 @@
-{% extends "base.html" %} 
+<!DOCTYPE html>
+<html lang="en" ng-app="LocalCart">
 
-{% block content %}
-<div ng-controller="IndexController as indexController">
-  <hr>
-  <div class="col-sm-12">
-    <div class="row">
-      <div class="container col-sm-offset-2 col-sm-5">
-        <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
-        <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus>
-        <input ng-model="indexController.searchQuery" type="text" placeholder="Enter Address!" class="form-control">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>FoodTruckFinder</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/mainpage.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-eJHV0gRr7b1h4X0i1605Rpf6flWXD6A&signed_in=true&libraries=places"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script type="text/javascript" src="static/controller.js"></script>
+</head>
+
+<body>
+  <div ng-controller="IndexController as indexController">
+    <hr>
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-5">
+          <input id="autocomplete" class="form-control" placeholder="Enter address!" type="text">
+          <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
+          <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus>
+        </div>
+        <div class="container col-sm-5">
+          <a ng-click="indexController.find_closest()" class="btn btn-primary">Find Food Trucks!</a>
+        </div>
       </div>
-      <div class="container col-sm-5">
-        <a ng-click="indexController.find_closest()" class="btn btn-primary">Find Food Trucks!</a>
-      </div>
-    </div>
-    <br>
-    <div>
-      <div class="container col-sm-5">
+      <br>
+      <div class="col-sm-5">
         <br>
-        <div class="table scrollable">
-          <div ng-repeat="row in indexController.results">
-            <div class="media-body">
-              <h3 class="media-heading">[[row.truck_name]]</h3>
-              <h5>Store: [[row.address]]</h5>
-              <hr>
+        <div ng-show="indexController.results.length > 0">
+          <div class="table scrollable">
+            <h2>Search Results for [[indexController.query.address]]</h2>
+            <hr>
+            <div ng-repeat="row in indexController.results">
+              <div class="media-body">
+                <h3 class="media-heading">[[row.truck_name]]</h3>
+                <h5>Address: [[row.address]]</h5>
+                <h5>Business Hours: [[row.operation_hours]]</h5>
+                <hr>
+              </div>
             </div>
           </div>
         </div>
+        <div ng-show="indexController.results.length <= 0">
+          <h2> Enter an address to see nearby foodtrucks!</h2>
+        </div>
       </div>
-    </div>
-    <div class="LocalCartMap">
-      <!-- put map here -->
+      <div class="col-sm-offset-1 col-sm-6" id="map"></div>
     </div>
   </div>
-</div>
+</body>
 
+</html>
+</body>
 
-
-
-<!-- <h1>Food Truck Finder!</h1> -->
-<!-- {% if nearest_truck %}
-	<ul>
-	  {% for truck in nearest_truck %}
-	  <li>{{truck}}</li>
-	  {% endfor %}
-	</ul>
-{% else %}
-	<form action="/api/find_closest" method="post">
-	    {% csrf_token %}
-	    {{ form }}
-	    <input type="submit" value="Submit" />
-	</form> -->
-{% endif %}
-{% endblock %}
+</html>
