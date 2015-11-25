@@ -1,2 +1,2 @@
-web: gunicorn hellodjango.wsgi --log-file -
+web: gunicorn foodtruck.wsgi --log-file -
 

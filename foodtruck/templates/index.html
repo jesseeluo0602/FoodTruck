@@ -1,0 +1,55 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<div ng-controller="IndexController as indexController">
+  <hr>
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="container col-sm-offset-2 col-sm-5">
+        <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
+        <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus>
+        <input ng-model="indexController.searchQuery" type="text" placeholder="Enter Address!" class="form-control">
+      </div>
+      <div class="container col-sm-5">
+        <a ng-click="indexController.find_closest()" class="btn btn-primary">Find Food Trucks!</a>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div class="container col-sm-5">
+        <br>
+        <div class="table scrollable">
+          <div ng-repeat="row in indexController.results">
+            <div class="media-body">
+              <h3 class="media-heading">[[row.truck_name]]</h3>
+              <h5>Store: [[row.address]]</h5>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="LocalCartMap">
+      <!-- put map here -->
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <h1>Food Truck Finder!</h1> -->
+<!-- {% if nearest_truck %}
+	<ul>
+	  {% for truck in nearest_truck %}
+	  <li>{{truck}}</li>
+	  {% endfor %}
+	</ul>
+{% else %}
+	<form action="/api/find_closest" method="post">
+	    {% csrf_token %}
+	    {{ form }}
+	    <input type="submit" value="Submit" />
+	</form> -->
+{% endif %}
+{% endblock %}
