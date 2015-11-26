@@ -24,9 +24,10 @@
   <div ng-controller="IndexController as indexController">
     <hr>
     <div class="col-sm-12">
+      <h1><p class="text-center">Food Trucks Near You!</p></h1>
       <div class="row">
         <div class="col-sm-offset-2 col-sm-5">
-          <input id="autocomplete" class="form-control" placeholder="Enter address!" type="text">
+          <input id="autocomplete" class="form-control" placeholder="Enter address to begin!" type="text">
 <!--           <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
           <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus> -->
         </div>
@@ -52,7 +53,7 @@
             </div>
           </div>
         </div>
-        <div ng-show="indexController.results.length <= 0">
+        <div ng-show="indexController.results.length <= 0" class="scrollable">
           <h2> Enter an address to see nearby foodtrucks!</h2>
         </div>
       </div>

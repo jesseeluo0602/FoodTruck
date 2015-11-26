@@ -1,6 +1,13 @@
+body {
+  background-color: #f9f9f9;
+  font-family: "Helvetica Neue"
+}
+
 .scrollable {
   overflow: scroll;
   height: 500px;
+  color: #50ABF1;
+  background-color: white;
 }
 
 #autocomplete {
