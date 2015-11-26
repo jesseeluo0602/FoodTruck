@@ -9,13 +9,17 @@ app.controller('IndexController', function($http, $window) {
   var vm = this;
   vm.query = {}
   vm.results = []
-  vm.find_closest = function() {
-    console.log(autocomplete.getPlace())
+  vm.submitQuery = function() {
     var place = autocomplete.getPlace();
     vm.query.longitude = place.geometry.location.lng();
     vm.query.latitude = place.geometry.location.lat();
-    vm.query.address = place.formatted_address
-    console.log(vm.query);
+    vm.query.address = place.formatted_address;
+    if (vm.query != {}) {
+      vm.findClosest(vm.query)
+    }
+  }
+
+  vm.findClosest = function() {
     if (vm.query != {}) {
       $http.post("/api/find_closest", vm.query).then(
         function successCallBack(response) {
@@ -28,15 +32,11 @@ app.controller('IndexController', function($http, $window) {
           }
         })
     }
-    console.log(vm.markers);
-
   }
-
 
   vm.markers = []
 
   vm.addMarker = function(foodtruck, index) {
-    console.log(index);
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(foodtruck.latitude, foodtruck.longitude),
       map: vm.map,
@@ -44,21 +44,19 @@ app.controller('IndexController', function($http, $window) {
       label: index.toString(),
     });
     vm.markers.push(marker);
-    console.log(vm.markers);
   }
 
   vm.addMarkers = function() {
     for (var i = 0; i < vm.results.length; i++) {
-      vm.addMarker(vm.results[i], i);
+      vm.addMarker(vm.results[i], i + 1);
     }
   }
 
   vm.deleteMarkers = function() {
-    console.log(vm.markers);
     for (var i = 0; i < vm.markers.length; i++) {
       var marker = vm.markers[i]
       marker.setMap(null);
-    }  
+    }
   }
 
   var mapOptions = {

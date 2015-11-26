@@ -27,11 +27,11 @@
       <div class="row">
         <div class="col-sm-offset-2 col-sm-5">
           <input id="autocomplete" class="form-control" placeholder="Enter address!" type="text">
-          <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
-          <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus>
+<!--           <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
+          <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus> -->
         </div>
         <div class="container col-sm-5">
-          <a ng-click="indexController.find_closest()" class="btn btn-primary">Find Food Trucks!</a>
+          <a ng-click="indexController.submitQuery()" class="btn btn-primary">Find Food Trucks!</a>
         </div>
       </div>
       <br>
@@ -39,11 +39,12 @@
         <br>
         <div ng-show="indexController.results.length > 0">
           <div class="table scrollable">
-            <h2>Search Results for [[indexController.query.address]]</h2>
+            <h2>Search Results for </h2>
+            <p><h5>[[indexController.query.address]]<p><h5>
             <hr>
             <div ng-repeat="row in indexController.results">
               <div class="media-body">
-                <h3 class="media-heading">[[row.truck_name]]</h3>
+                <h3 class="media-heading">[[$index + 1]]. [[row.truck_name]]</h3>
                 <h5>Address: [[row.address]]</h5>
                 <h5>Business Hours: [[row.operation_hours]]</h5>
                 <hr>
