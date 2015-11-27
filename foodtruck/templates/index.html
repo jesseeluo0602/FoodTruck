@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="LocalCart">
+<html lang="en" ng-app="FoodTruck">
 
 <head>
   <meta charset="utf-8">
@@ -16,20 +16,18 @@
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-eJHV0gRr7b1h4X0i1605Rpf6flWXD6A&signed_in=true&libraries=places"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script type="text/javascript"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script type="text/javascript" src="static/controller.js"></script>
 </head>
 
 <body>
   <div ng-controller="IndexController as indexController">
-    <hr>
     <div class="col-sm-12">
       <h1><p class="text-center">Food Trucks Near You!</p></h1>
       <div class="row">
-        <div class="col-sm-offset-2 col-sm-5">
+        <div class="col-sm-offset-2 col-sm-4">
           <input id="autocomplete" class="form-control" placeholder="Enter address to begin!" type="text">
-<!--           <input ng-model="indexController.query.latitude" class="form-control" placeholder="Latitude" required autofocus>
-          <input ng-model="indexController.query.longitude" class="form-control" placeholder="Longitude" required autofocus> -->
         </div>
         <div class="container col-sm-5">
           <a ng-click="indexController.submitQuery()" class="btn btn-primary">Find Food Trucks!</a>
@@ -39,25 +37,42 @@
       <div class="col-sm-5">
         <br>
         <div ng-show="indexController.results.length > 0">
-          <div class="table scrollable">
+          <div class="table scrollable text-center corners">
             <h2>Search Results for </h2>
-            <p><h5>[[indexController.query.address]]<p><h5>
-            <hr>
-            <div ng-repeat="row in indexController.results">
-              <div class="media-body">
-                <h3 class="media-heading">[[$index + 1]]. [[row.truck_name]]</h3>
-                <h5>Address: [[row.address]]</h5>
-                <h5>Business Hours: [[row.operation_hours]]</h5>
-                <hr>
+            <p>
+              <div ng-show="!indexController.clickedQuery">
+                <h3>[[indexController.query.address]]<p></h3>
               </div>
-            </div>
+              <div ng-show="indexController.clickedQuery">
+                <h3>([[indexController.query.latitude]], [[indexController.query.longitude]]) </h3></div>
+              <hr>
+              <table class="table table-hover">
+                <tbody>
+                  <!-- <div ng-repeat="row in indexController.results"> -->
+                  <tr ng-repeat="row in indexController.results">
+                    <th>[[$index + 1]]</th>
+                    <td>
+                      <div class="media-body">
+                        <h3 class="media-heading">[[row.truck_name]]</h3>
+                        <h5>Address: [[row.address]]</h5>
+                        <h5>Food Options: [[row.food_items]]</h5>
+                        <h5>Business Hours: [[row.operation_hours]]</h5>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- </div> -->
+                </tbody>
+              </table>
           </div>
         </div>
-        <div ng-show="indexController.results.length <= 0" class="scrollable">
-          <h2> Enter an address to see nearby foodtrucks!</h2>
+        <div ng-show="indexController.results.length <= 0" class="corners">
+          <div class="text-center">
+            <h2> Enter an address to see nearby foodtrucks!</h2>
+          </div>
         </div>
       </div>
-      <div class="col-sm-offset-1 col-sm-6" id="map"></div>
+      <div class="col-sm-offset-1 col-sm-6" id="map">
+      </div>
     </div>
   </div>
 </body>

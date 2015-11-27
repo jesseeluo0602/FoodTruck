@@ -6,8 +6,12 @@ body {
 .scrollable {
   overflow: scroll;
   height: 500px;
-  color: #50ABF1;
-  background-color: white;
+}
+
+.corners, .map {
+    border-radius: 15px;
+    border: 1px solid black;
+    padding: 20px; 
 }
 
 #autocomplete {
@@ -18,3 +22,4 @@ body {
   width: 500px;
   height: 500px;
 }
+

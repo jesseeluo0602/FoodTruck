@@ -5,12 +5,18 @@ import urllib2
 from heapq import heappush, heappop
 import math
 
+
+# This Command is used to load the food truck data into your database.  Run 
+# python manage.py loadfoodtrucks <filename>
+# also, using "web" as file name will default to making a get request to 
+# th DataSF food truck doc: 'https://data.sfgov.org/resource/rqzj-sfat.json'
 class Command(BaseCommand):
     help = 'Loads food truck data into db'
 
     def add_arguments(self, parser):
         parser.add_argument('filename', nargs='+', type=str)
 
+    # delete the databse if it exists, the insert rows afterwards.
     def handle(self, *args, **options):
         try:
             FoodTruck.objects.all().delete()
@@ -20,7 +26,7 @@ class Command(BaseCommand):
             else:
                 json_data = json.loads(open(filename).read())
             for table_row in json_data:
-                truck_name = address = latitude = longitude = schedule_url = operation_hours = ""
+                truck_name = address = latitude = longitude = schedule_url = operation_hours = food_items= ""
                 if 'applicant' in table_row:
                     truck_name = table_row['applicant']
                 if 'address' in table_row:
@@ -33,27 +39,14 @@ class Command(BaseCommand):
                     schedule_url = table_row['schedule']
                 if 'dayshours' in table_row:
                     operation_hours = table_row['dayshours']
-                new_food_truck = FoodTruck(truck_name=truck_name, address=address, latitude=latitude, 
-                    longitude=longitude, schedule_url=schedule_url, operation_hours=operation_hours)
-                new_food_truck.save()
-            user_lat = 37
-            user_lon = 122
-            min_heap = []
-            test = []
-            for foodtruck in FoodTruck.objects.all():
-                dist_from_address = self.get_dist((user_lat, user_lon), (foodtruck.latitude, foodtruck.longitude))
-                test.append(dist_from_address)
-                if len(min_heap) < 10:
-                    print foodtruck.truck_name
-                    heappush(min_heap, (-dist_from_address, foodtruck.id))
-                # print -dist_from_address > min_heap[0], -dist_from_address, min_heap[0]
-                if -dist_from_address > min_heap[0][0]:
-                    # print "hello"
-                    heappop(min_heap)
-                    heappush(min_heap, (-dist_from_address, foodtruck.id))
-            print sorted(min_heap, reverse=True)
-            test = sorted(test)
-            print test[:10]
+                if 'fooditems' in table_row:
+                    food_items = table_row['fooditems']
+                # make sure there are no duplicate entries inside our database
+                if not FoodTruck.objects.filter(truck_name=truck_name, latitude=latitude, longitude=longitude).exists():
+                    new_food_truck = FoodTruck(truck_name=truck_name, address=address, latitude=latitude, 
+                        longitude=longitude, schedule_url=schedule_url, operation_hours=operation_hours, 
+                        food_items=food_items)
+                    new_food_truck.save()
         except Exception as e:
             print e
 

@@ -8,6 +8,7 @@ class FoodTruck(models.Model):
     longitude = models.CharField(max_length=200)
     schedule_url = models.CharField(max_length=200)
     operation_hours = models.CharField(max_length=200)
+    food_items = models.CharField(max_length=500)
 
     class Meta:
         unique_together = ('truck_name', 'latitude', 'longitude')
@@ -26,6 +27,7 @@ class FoodTruck(models.Model):
 		        "longitude": foodtruck.longitude,
 		        "schedule_url": foodtruck.schedule_url,
 		        "operation_hours": foodtruck.operation_hours,
+                "food_items": foodtruck.food_items,
 	        }
         	return foodtruck_dict
         return {}
