@@ -18,6 +18,7 @@ class FoodTruck(models.Model):
     def __str__(self):              # __unicode__ on Python 2
        return self.truck_name
 
+    # returns a dictinoary containing the relevant fields needed in the GET request
     def get_info(self):
         foodtruck_dict = {
             "truck_name": self.truck_name,
@@ -30,6 +31,10 @@ class FoodTruck(models.Model):
         }
         return foodtruck_dict
 
+    # Returns the <num_trucks> closest trucks to a user-inputted coordinate.  We look at all our foodtruck objects
+    # and put them into a heap based on distance.  We negate the values because python heaps are implicitly min_heaps.
+    # We keep a heap size of <num_trucks> and only pop and insert a value when we find a truck that is closer (smaller)
+    # than the greatest magnitutde value in the heap.
     @staticmethod
     def get_closest(user_lat, user_lon, num_trucks):
         min_heap = []
@@ -45,6 +50,7 @@ class FoodTruck(models.Model):
             nearest_trucks.append(truck_tuple[1].get_info())
         return nearest_trucks
 
+    # quick implementation fo the distance formula
     @staticmethod
     def get_dist(user_point, foodtruck_point):
         # enums
