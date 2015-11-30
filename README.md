@@ -12,10 +12,10 @@ pip install -r requirements.txt
 git clone https://github.com/jesseeluo0602/FoodTruck.git
 
 python manage.py syncdb
-python manage.py loadfoodtrucks web     -- web is the default json found at
-https://data.sfgov.org/Economy-and-Community/Mobile-Food-Facility-Permit/rqzj-sfat
+python manage.py loadfoodtrucks web     
 
-You can replace web with a json file and will still work as long as it has the same headers. Django command can be found in foodtruck/management/commands
+-- web is the default json found at
+https://data.sfgov.org/Economy-and-Community/Mobile-Food-Facility-Permit/rqzj-sfat.  You can replace web with a json file and will still work as long as it has the same headers. Django command can be found in foodtruck/management/commands
 
 python manage.py runserver
 
