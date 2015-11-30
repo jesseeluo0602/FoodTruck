@@ -12,6 +12,7 @@ pip install -r requirements.txt
 git clone https://github.com/jesseeluo0602/FoodTruck.git
 
 python manage.py syncdb
+
 python manage.py loadfoodtrucks web     
 
 -- web is the default json found at
