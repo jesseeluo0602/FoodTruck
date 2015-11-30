@@ -8,8 +8,8 @@ body {
   height: 500px;
 }
 
-.corners, .map {
-    border-radius: 15px;
+.corners{
+    border-radius: 5px;
     border: 1px solid black;
     padding: 20px; 
 }

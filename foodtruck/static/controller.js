@@ -4,12 +4,13 @@
   angular
     .module('FoodTruck', [])
     .controller('IndexController', IndexController)
+    // distinction between angular brackets and django templating brackets
     .config(function($interpolateProvider) {
       $interpolateProvider.startSymbol('[[');
       $interpolateProvider.endSymbol(']]');
     });
 
-  function IndexController($http, $window) {
+  function IndexController($http) {
 
     // vm.query: parameters for the get request, {latitude, longitude, address }
     // vm.results: list of closest food trucks returned in the get response

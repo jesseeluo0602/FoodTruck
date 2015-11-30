@@ -18,40 +18,40 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-eJHV0gRr7b1h4X0i1605Rpf6flWXD6A&signed_in=true&libraries=places"></script>
   <script type="text/javascript"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-mocks.js"></script>
   <script type="text/javascript" src="static/controller.js"></script>
 </head>
 
 <body>
   <div ng-controller="IndexController as indexController">
-    <div class="col-sm-12">
+    <div class="col-sm-12 col-md-12">
       <h1><p class="text-center">Food Trucks Near You!</p></h1>
-      <div class="row">
-        <div class="col-sm-offset-2 col-sm-4">
-          <input id="autocomplete" class="form-control" placeholder="Enter address to begin!" type="text">
-        </div>
-        <div class="container col-sm-5">
-          <a ng-click="indexController.submitQuery()" class="btn btn-primary">Find Food Trucks!</a>
-        </div>
+      <div class="input-group col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <input id="autocomplete" type="text" class="form-control" placeholder="Search for...">
+        <span class="input-group-btn">
+            <button ng-click="indexController.submitQuery()" class="btn btn-default" type="button">Find Food Trucks!</button>
+        </span>
       </div>
       <br>
-      <div class="col-sm-5">
+      <!-- Left column and results after click -->
+      <div class="col-sm-5 col-md-5">
         <br>
         <div ng-show="indexController.results.length > 0">
           <div class="table scrollable text-center corners">
             <h2>Search Results for </h2>
             <p>
+              <!-- Search results header -->
               <div ng-show="!indexController.clickedQuery">
                 <h3>[[indexController.query.address]]<p></h3>
               </div>
               <div ng-show="indexController.clickedQuery">
                 <h3>([[indexController.query.latitude]], [[indexController.query.longitude]]) </h3></div>
-              <hr>
               <table class="table table-hover">
                 <tbody>
-                  <!-- <div ng-repeat="row in indexController.results"> -->
                   <tr ng-repeat="row in indexController.results">
-                    <th>[[$index + 1]]</th>
+                    <td>[[$index + 1]]</td>
                     <td>
+                      <!-- Search results entry -->
                       <div class="media-body">
                         <h3 class="media-heading">[[row.truck_name]]</h3>
                         <h5>Address: [[row.address]]</h5>
@@ -60,18 +60,19 @@
                       </div>
                     </td>
                   </tr>
-                  <!-- </div> -->
                 </tbody>
               </table>
           </div>
         </div>
+        <!-- Left column before search click-->
         <div ng-show="indexController.results.length <= 0" class="corners">
           <div class="text-center">
-            <h2> Enter an address to see nearby foodtrucks!</h2>
+            <h2> Enter an address or click on the map to see nearby foodtrucks!</h2>
           </div>
         </div>
       </div>
-      <div class="col-sm-offset-1 col-sm-6" id="map">
+      <!-- Google Map and right column -->
+      <div class="col-sm-offset-1 col-sm-6 col-md-6" id="map">
       </div>
     </div>
   </div>
