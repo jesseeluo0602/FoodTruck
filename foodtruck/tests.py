@@ -16,11 +16,14 @@ class FoodTruckTestCase(TestCase):
 		FoodTruck.objects.create(truck_name="truck5", address="address5", latitude="10", 
 			longitude="10", schedule_url="schedule5", operation_hours="hours5", food_items="food_items")
 
+	# test our FoodTruck.get_info() method to make sure it correctly returns a dictionary containing
+	# relevant values
 	def test_get_info(self):
 		truck1 = FoodTruck.objects.get(truck_name="truck1")
 		self.assertEqual(truck1.get_info(), {'truck_name':"truck1", 'address':"address1", 'latitude':"5", 
 			'longitude':"5", 'schedule_url':"schedule1", 'operation_hours':"hours1", 'food_items':"food_items"})
 
+	# test our FoodTruck.get_dist() method to make sure it correctly returns the distance from p1 to p2. 
 	def test_get_dist(self):
 		point1 = (0,0)
 		point2 = (2,0)
@@ -31,6 +34,8 @@ class FoodTruckTestCase(TestCase):
 		point2= (37.111, 120.55)
 		self.assertEqual(FoodTruck.get_dist(point1, point2), 126.13298070290736)
 
+	# test our FoodTruck.get_info() method to make sure it correctly returns a list containing
+	# the closest food trucks
 	def test_get_closest(self):
 		truck1 = FoodTruck.objects.get(truck_name="truck1")
 		truck2 = FoodTruck.objects.get(truck_name="truck2")
@@ -48,6 +53,7 @@ class FoodTruckTestCase(TestCase):
 		self.assertNotIn(truck5.get_info(), result)
 
 
+		# results closest on the opposite end of origin should be truck 4 and truck 5,
 		result = FoodTruck.get_closest(100, 100, 2)
 		self.assertIn(truck4.get_info(), result)
 		self.assertIn(truck5.get_info(), result)

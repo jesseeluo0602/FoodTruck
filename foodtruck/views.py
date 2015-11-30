@@ -4,12 +4,11 @@ from django.views.decorators.csrf import csrf_exempt
 from models import FoodTruck
 import json
 
-
-
-# Create your views here.
+# Base view, render home page template.
 def render_index(request):
 	return render(request, 'index.html', {})
 
+# get request to url "api/find_closest"
 # Parse the get request parameters and return the #('num_trucks') closest bird's eye
 # distance from the address requested.  Put into heap for slightly faster return
 @csrf_exempt
